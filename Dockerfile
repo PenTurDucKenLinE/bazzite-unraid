@@ -21,9 +21,6 @@ RUN echo -e "\n[lizardbyte]\nSigLevel = Optional\nServer = https://github.com/Li
 
 # Package updates & base system
 RUN --mount=type=cache,target=/var/cache/pacman/pkg \
-    # Update mirrors for better download reliability \
-    pacman -Sy --noconfirm reflector && \
-    reflector --verbose --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist && \
     # Update base packages \
     pacman -Syu --noconfirm && \
     # Install core build tools (needed for AUR and other builds) \
@@ -110,7 +107,7 @@ RUN --mount=type=cache,target=/var/cache/pacman/pkg \
     rm -rf /var/cache/pacman/pkg/*
 
 # ============================================================
-# GAMING APPLICATIONS
+# GAMING APPLICATIONS, TOOLS, & UTILITIES
 # ============================================================
 # These packages work with both X11 and Wayland
 # gamescope prefers Wayland but supports X11
@@ -127,6 +124,18 @@ RUN --mount=type=cache,target=/var/cache/pacman/pkg \
     # Cleanup \
     pacman -Scc --noconfirm && \
     rm -rf /var/cache/pacman/pkg/*
+
+# Sunshine streaming server
+RUN --mount=type=cache,target=/var/cache/pacman/pkg \
+    pacman -S --noconfirm lizardbyte/sunshine && \
+    # Cleanup \
+    pacman -Scc --noconfirm && \
+    rm -rf /var/cache/pacman/pkg/*
+
+# LatencyFleX script and DXVK configuration tool
+RUN wget https://raw.githubusercontent.com/Shringe/LatencyFleX-Installer/main/install.sh -O /usr/bin/latencyflex && \
+    sed -i 's@"dxvk.conf"@"/usr/share/latencyflex/dxvk.conf"@g' /usr/bin/latencyflex && \
+    chmod +x /usr/bin/latencyflex
 
 # ============================================================
 # X11 DISPLAY SERVER PACKAGES
@@ -167,24 +176,6 @@ RUN --mount=type=cache,target=/var/cache/pacman/pkg \
     rm -rf /var/cache/pacman/pkg/* && \
     # Configure default XFCE startup \
     echo 'exec startxfce4' > /etc/skel/.xinitrc
-
-# ============================================================
-# SUNSHINE STREAMING SERVER
-# ============================================================
-
-RUN --mount=type=cache,target=/var/cache/pacman/pkg \
-    pacman -S --noconfirm lizardbyte/sunshine && \
-    # Cleanup \
-    pacman -Scc --noconfirm && \
-    rm -rf /var/cache/pacman/pkg/*
-
-# ============================================================
-# ADDITIONAL TOOLS
-# ============================================================
-
-RUN wget https://raw.githubusercontent.com/Shringe/LatencyFleX-Installer/main/install.sh -O /usr/bin/latencyflex && \
-    sed -i 's@"dxvk.conf"@"/usr/share/latencyflex/dxvk.conf"@g' /usr/bin/latencyflex && \
-    chmod +x /usr/bin/latencyflex
 
 # ============================================================
 # BUILD OPTIMIZATIONS FOR MULTI-CORE SYSTEM
