@@ -1,27 +1,11 @@
-# bazzite-arch
+# bazzite-unraid-xfce
 
-[![build-bazzite-arch](https://github.com/ublue-os/bazzite-arch/actions/workflows/build.yml/badge.svg)](https://github.com/ublue-os/bazzite-arch/actions/workflows/build.yml) 
-
-Bazzite-Arch is a ready-to-game [Arch Linux](https://archlinux.org/) based OCI designed for use exclusively in [distrobox](https://github.com/89luca89/distrobox). It can be used on any Linux distributon by following the usage section below.
-
-## Usage
-
-    distrobox-create --unshare-netns --nvidia --image ghcr.io/ublue-os/bazzite-arch --name bazzite-arch -Y
-
-<sub>For the GNOME desktop environment, you may want to replace `ghcr.io/ublue-os/bazzite-arch` in the above command with `ghcr.io/ublue-os/bazzite-arch-gnome`, which comes with `xdg-desktop-portal-gtk`.</sub>
-<sub >For Intel and AMD GPUs, the support is baked in, as the containers will install their latest available mesa/dri drivers.</sub>
-
-Once the image has been created, you may optionally export the pre-installed applications to your host operating system using the following:
-
-    distrobox-enter -n bazzite-arch -- '  distrobox-export --app steam'
-    distrobox-enter -n bazzite-arch -- '  distrobox-export --app lutris'
-    distrobox-enter -n bazzite-arch -- '  distrobox-export --app protontricks'
-    distrobox-enter -n bazzite-arch -- '  mkdir -p ~/.steam && distrobox-export --bin /usr/bin/steamcmd --export-path ~/.steam && mv ~/.steam/steamcmd ~/.steam/steamcmd.sh'
+Bazzite-Unraid is a project for running Bazzite-Arch with XFCE on Unraid via Distrobox.
 
 Bazzite-Arch is built from [arch-toolbox](https://github.com/ublue-os/toolboxes/tree/main/toolboxes/arch-toolbox), which ships with [paru](https://github.com/Morganamilo/paru) pre-installed, along with a modified [xdg-utils](https://github.com/KyleGospo/xdg-utils-distrobox-arch) that allows the container to open your host operating system's web browsers and file explorer.
 
-## Verification
+This project modifies the Bazzite-Arch build file to allow for updates and additions to the base image.
 
-These images are signed with sisgstore's [cosign](https://docs.sigstore.dev/cosign/overview/). You can verify the signature by downloading the `cosign.pub` key from this repo and running the following command:
+# instructions
 
-    cosign verify --key cosign.pub ghcr.io/ublue-os/bazzite-arch
+In progress...
