@@ -243,4 +243,4 @@ RUN sed -i 's@ (Runtime)@@g' /usr/share/applications/steam.desktop && \
     rm -rf /tmp/* /var/cache/pacman/pkg/*
 
 # Note: Currently the sunshine.config must be configured to use X11 capture mode "capture = x11"
-# docker build --build-arg HOST_USER=ABCXYZ123456 -t bazzite-unraid-xfce:latest .
+# docker build --build-arg HOST_USER=$HOST_USER -t bazzite-unraid-xfce:latest .
